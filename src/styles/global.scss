@@ -1,0 +1,39 @@
+@import "variables";
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: $font-family-primary;
+	font-size: $font-size-base;
+	background-color: $background-color;
+	color: $text-color;
+}
+
+h1,
+h2,
+h3 {
+	margin-bottom: $base-margin;
+	color: $primary-color;
+}
+
+a {
+	text-decoration: none;
+}
+ul,
+ol {
+	list-style: none;
+}
+input {
+	border: none;
+	outline: none;
+}
+
+button {
+	outline: none;
+	cursor: pointer;
+	border: none;
+}
