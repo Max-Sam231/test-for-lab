@@ -1,15 +1,10 @@
 import type {Metadata} from "next";
-import {Inter, Roboto_Mono} from "next/font/google";
+import {Roboto} from "next/font/google";
 import "../styles/global.scss";
 
-const inter = Inter({
+const roboto = Roboto({
 	subsets: ["latin", "cyrillic"],
-	variable: "--font-primary",
-});
-
-const robotoMono = Roboto_Mono({
-	subsets: ["latin", "cyrillic"],
-	variable: "--font-mono",
+	variable: "--font-roboto",
 });
 
 export const metadata: Metadata = {
@@ -24,7 +19,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${inter.variable} ${robotoMono.variable}`}>{children}</body>
+			<body className={`${roboto.variable}`}>{children}</body>
 		</html>
 	);
 }
