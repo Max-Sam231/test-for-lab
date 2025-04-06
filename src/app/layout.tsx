@@ -1,5 +1,5 @@
-import type {Metadata} from "next";
-import {Roboto} from "next/font/google";
+import type { Metadata } from "next";
+import { Roboto } from "next/font/google";
 import "../styles/global.scss";
 
 const roboto = Roboto({

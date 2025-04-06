@@ -1,0 +1,82 @@
+@import "../../styles/variables.scss";
+
+.Container {
+	position: relative;
+}
+.icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 45px;
+	height: 45px;
+	border-radius: 2px;
+	background-color: $gray;
+	z-index: 99;
+}
+.arrow {
+	display: block;
+	position: absolute;
+	top: 18px;
+	right: 15px;
+	z-index: 99;
+	width: 10px;
+	height: 10px;
+	border: 2px solid #fff;
+	border-bottom: none;
+	border-right: none;
+	cursor: pointer;
+	transform: rotate(225deg);
+	transition: ease-in-out all 0.2s;
+	&--up {
+		transform: rotate(45deg);
+	}
+}
+.select {
+	display: flex;
+	position: relative;
+	align-items: center;
+	cursor: pointer;
+	width: 100%;
+	padding: 0 0 0 70px;
+	margin: 0 0 8px 0;
+	height: 45px;
+	background: $secondary-color;
+
+	&__menu {
+		position: absolute;
+		width: 100%;
+		max-width: 360px;
+		top: 48px;
+		left: 45px;
+		z-index: 999;
+		padding: 0px 14px 0px 14px;
+		height: 0px;
+		overflow-y: auto;
+		background: $secondary-color;
+		box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.25);
+		transition: ease-in all 0.2s;
+		&--open {
+			padding: 6px 14px 6px 14px;
+			height: 200px;
+		}
+		li {
+			padding: 8px 0 8px 20px;
+			background: $active-input-color;
+			margin: 0 0 2px 0;
+			cursor: pointer;
+			transition: all ease-in-out 0.2s;
+			&:hover {
+				background-color: darken($active-input-color, 3%);
+			}
+		}
+		.active {
+			background: $light-blue;
+			&:hover {
+				background: $light-blue;
+			}
+		}
+	}
+}
