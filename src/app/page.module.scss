@@ -6,34 +6,6 @@
 .container {
 	display: flex;
 }
-.header {
-	width: 100%;
-	padding: 8px;
-	background-color: $primary-color;
-	min-height: 50px;
-	border-radius: 2px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-.right {
-	display: flex;
-	width: calc(100% - 35.7vw);
-	justify-content: flex-end;
-}
-.left {
-	display: flex;
-	min-width: 540px;
-	width: 35.7vw;
-	justify-content: space-between;
-}
-.logo {
-	display: flex;
-	align-items: center;
-	p {
-		margin: 0 0 0 18px;
-	}
-}
 .icon {
 	display: block;
 	width: 20px;
@@ -57,65 +29,12 @@
 	font-size: $font-size-sl;
 }
 
-.sideBar {
-	width: 25%;
-	margin: 8px 0;
-	border-radius: 2px;
-	max-width: 400px;
-	height: 82vh;
-	overflow: hidden;
-	background-color: $primary-color;
-
-	&__search {
-		display: flex;
-		align-items: center;
-		height: 68px;
-		justify-content: space-between;
-		padding: 16px 16px 16px 60px;
-		margin: 0 0 2px 0; //1.6
-		background-color: $secondary-color;
-	}
-	&__button {
-		display: block;
-		width: 35px;
-		height: 35px;
-		background: $icon-color;
-	}
-	&__listReservoir {
-		height: 73vh;
-		overflow-y: auto;
-	}
-
-	&__item {
-		height: 40px;
-		line-height: 40px;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		border-left: 2px solid transparent;
-		padding: 12px 16px 16px 60px;
-		margin-bottom: 2px;
-		background-color: $secondary-color;
-		transition: ease-in-out background 0.2s;
-
-		&:hover {
-			background-color: darken($primary-color, 2%);
-		}
-
-		&--active {
-			border-left: 2px solid $light-blue;
-			background-color: $dark-blue;
-			&:hover {
-				background-color: $dark-blue;
-			}
-		}
-	}
-}
 
 .cardReservoir {
 	margin: 8px 0 0 16px;
 	padding: 0 0 16px 0;
-	width: 33%;
+	width: 100%;
+	max-width: 570px;
 	height: 82vh;
 	overflow: hidden;
 	display: flex;
@@ -125,7 +44,7 @@
 	border-radius: 2px;
 	background-color: $primary-color;
 
-	.content{
+	.content {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -156,7 +75,6 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	// overflow-y: auto;
 	justify-content: flex-start;
 	&__container {
 		width: 100%;
@@ -195,6 +113,56 @@
 	}
 }
 
+.toggle {
+	position: absolute;
+	top: 16px;
+	right: 16px;
+	width: 25px;
+	height: 15px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	&__button {
+		position: relative;
+		width: 25px;
+		height: 10px;
+		margin: 0;
+		vertical-align: top;
+		background: $gray;
+		border: 1px solid $icon-color;
+		border-radius: 30px;
+		outline: none;
+		cursor: pointer;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		transition: all ease-in 0.2s;
+	}
+	&__button::after {
+		content: "";
+		position: absolute;
+		left: -3px;
+		top: -3px;
+		width: 14px;
+		height: 14px;
+		background-color: #ffffff;
+		border: 1px solid #d7e2f2;
+		border-radius: 50%;
+		transform: translateX(0);
+		transition: all ease-in 0.2s;
+	}
+
+	&__button:checked::after {
+		transform: translateX(calc(100%));
+		background-color: #ffffff;
+	}
+
+	&__button:checked {
+		background: $light-blue;
+		border: 1px solid #0270bb;
+	}
+}
+
 .submitContainer {
 	display: flex;
 	justify-content: space-between;
@@ -210,14 +178,6 @@
 	button {
 		width: 100%;
 	}
-}
-.toggle {
-	position: absolute;
-	top: 16px;
-	right: 16px;
-	width: 25px;
-	height: 15px;
-	background: $light-blue;
 }
 
 .hide {

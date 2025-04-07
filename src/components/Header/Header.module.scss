@@ -1,0 +1,51 @@
+@import "../../styles/variables.scss";
+.header {
+	width: 100%;
+	padding: 8px;
+	background-color: $primary-color;
+	min-height: 50px;
+	border-radius: 2px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.right {
+	display: flex;
+	width: calc(100% - 35.7vw);
+	justify-content: flex-end;
+}
+.left {
+	display: flex;
+	min-width: 540px;
+	width: 35.7vw;
+	justify-content: space-between;
+}
+.logo {
+	display: flex;
+	align-items: center;
+	p {
+		margin: 0 0 0 18px;
+	}
+}
+.icon {
+	display: block;
+	width: 20px;
+	height: 20px;
+	// background: $icon-color;
+}
+.button {
+	border-radius: 2px;
+	padding: 12px 16px 12px 16px;
+	color: $text-color;
+	width: auto;
+	background: $gray;
+	&--active {
+		background: $light-blue;
+	}
+	&--disable {
+		background: darken($gray, 3%);
+	}
+}
+.text--sl {
+	font-size: $font-size-sl;
+}
