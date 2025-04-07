@@ -1,0 +1,108 @@
+@import "../../styles/variables.scss";
+
+.sideBar {
+	width: 25%;
+	margin: 8px 0;
+	border-radius: 2px;
+	max-width: 400px;
+	height: 82vh;
+	overflow: hidden;
+	background-color: $primary-color;
+
+	&__search {
+		display: flex;
+		align-items: center;
+		height: 68px;
+		justify-content: space-between;
+		padding: 16px 16px 16px 60px;
+		margin: 0 0 2px 0; //1.6
+		background-color: $secondary-color;
+		div {
+			display: flex;
+			align-items: center;
+		}
+		span {
+			display: block;
+			width: 250px;
+			white-space: nowrap;
+			overflow: hidden;
+			transition: all ease-in 0.2s;
+		}
+		.hide {
+			width: 0px;
+			transition: all ease-in 0.3s;
+		}
+	}
+	&__searchWrapper{
+		position: relative;
+		overflow: hidden;
+	}
+	&__input {
+		width: 0px;
+		padding: 0;
+		height: 35px;
+		background: $primary-color;
+		transition: all ease-in-out 0.4s;
+		&--active {
+			width: 260px;
+			padding: 0 34px 0 8px;
+			height: 35px;
+			background: $primary-color;
+			transition: all ease-in-out 0.4s;
+		}
+	}
+	&__cross{
+		position: absolute;
+		right: -36px;
+		height: 35px;
+		width: 35px;
+		border-radius: 2px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 28px;
+		cursor: pointer;
+		font-weight: 100;
+		background: $gray;
+		transition: all ease-in 0.3s;
+		&--active{
+			right: 0px;
+		}
+	}
+	&__button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 35px;
+		height: 35px;
+		background: $gray;
+		border-radius: 2px;
+	}
+	&__listReservoir {
+		height: 73vh;
+		overflow-y: auto;
+	}
+
+	&__item {
+		display: flex;
+		justify-content: space-between;
+		border-left: 2px solid transparent;
+		height: 45px;
+		padding: 12px 12px 12px 60px;
+		margin-bottom: 2px;
+		background-color: $secondary-color;
+		transition: ease-in-out background 0.2s;
+
+		&:hover {
+			background-color: darken($primary-color, 2%);
+		}
+
+		&--active {
+			border-left: 2px solid $light-blue;
+			background-color: $dark-blue;
+			&:hover {
+				background-color: $dark-blue;
+			}
+		}
+	}
+}
