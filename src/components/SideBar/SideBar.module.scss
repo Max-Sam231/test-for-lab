@@ -2,12 +2,28 @@
 
 .sideBar {
 	width: 25%;
+	min-width: 320px;
 	margin: 8px 0;
 	border-radius: 2px;
 	max-width: 400px;
 	height: 82vh;
 	overflow: hidden;
 	background-color: $primary-color;
+	@media (max-width:768px) {
+		// display: none;
+		position: absolute;
+		left: -100vw;
+		top: 0;
+		z-index: 999;
+		width: 80vw;
+		max-width: none;
+		height: 100vh;
+		margin: 0;
+		transition: all ease-in 0.2s;
+		&--mobileActive{
+			left: 0vw;
+		}
+	}
 
 	&__search {
 		display: flex;
@@ -23,7 +39,7 @@
 		}
 		span {
 			display: block;
-			width: 250px;
+			width: 190px;
 			white-space: nowrap;
 			overflow: hidden;
 			transition: all ease-in 0.2s;
@@ -40,11 +56,13 @@
 	&__input {
 		width: 0px;
 		padding: 0;
+		min-width: 0px;
 		height: 35px;
 		background: $primary-color;
 		transition: all ease-in-out 0.4s;
 		&--active {
-			width: 260px;
+			width: calc(24vw - 60px - 35px - 16px);
+			min-width: 210px;
 			padding: 0 34px 0 8px;
 			height: 35px;
 			background: $primary-color;

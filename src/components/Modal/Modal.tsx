@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Modal.module.scss";
 import Image from "next/image";
 
-interface Props {
+type Props = {
 	children: React.ReactNode;
 	isOpen: boolean;
 	setIsOpen: (open: boolean) => void;

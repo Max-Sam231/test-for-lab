@@ -29,7 +29,7 @@ const Select: React.FC = () => {
 					style={{ width: "auto", height: "auto", background: "transparent" }}
 				/>
 			</span>
-			<div className={styles.select}>{SelectOption}</div>
+			<div className={isSelectOpen ? `${styles.select} ${styles["select--active"]}` : styles.select}>{SelectOption}</div>
 			<span
 				className={isSelectOpen ? `${styles.arrow} ${styles["arrow--up"]} ` : styles.arrow}
 			></span>

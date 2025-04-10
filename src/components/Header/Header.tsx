@@ -2,7 +2,11 @@ import React from "react";
 import styles from "./Header.module.scss";
 import Image from "next/image";
 
-const Header: React.FC = () => {
+type Props = {
+	setIsOpenMobile :()=> void;
+}
+
+const Header: React.FC<Props> = ({setIsOpenMobile}) => {
 	return (
 		<div className={styles.header}>
 			<div className={styles.left}>
@@ -11,9 +15,8 @@ const Header: React.FC = () => {
 						<Image
 							src="/assets/svg/settings.svg"
 							alt="Logo"
-							width={100}
-							height={100}
-							style={{ width: "auto", height: "auto" }}
+							width={25}
+							height={25}
 						/>
 					</span>
 					<p className={styles["text--sl"]}>Панель администрирования резервуаров</p>
@@ -22,6 +25,9 @@ const Header: React.FC = () => {
 			</div>
 			<div className={styles.right}>
 				<button className={`${styles.button} ${styles["text--sl"]}`}>Экран резервуаров</button>
+				<button className={styles.mobileMenu} onClick={() => setIsOpenMobile()}>
+					<Image src="/assets/svg/mobile-icon.svg" alt="Logo" width={24} height={24} />
+				</button>
 			</div>
 		</div>
 	);

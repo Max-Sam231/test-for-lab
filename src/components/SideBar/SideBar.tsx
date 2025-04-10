@@ -78,25 +78,33 @@ const mokiData: Reservoir[] = [
 	},
 ];
 
-const SideBar: React.FC = () => {
+type Props = {
+	isOpenMobile: boolean;
+	setIsOpenMobile: () => void;
+};
+
+const SideBar: React.FC<Props> = ({ isOpenMobile, setIsOpenMobile }) => {
 	const [active, setActive] = useState(mokiData[0].id);
 	const [searchValue, setSearchValue] = useState("");
 	const [issearchActive, setIssearchActive] = useState(false);
-	const closeSearch = ()=>{
+
+	const closeSearch = () => {
 		setIssearchActive(!issearchActive);
 		setSearchValue("");
-	}
+	};
+	console.log(isOpenMobile);
+	const menuOptionClick = (item: Reservoir) => {
+		setActive(item.id);
+		setIsOpenMobile();
+	};
 	return (
-		<div className={styles.sideBar}>
+		<div className={isOpenMobile ? `${styles.sideBar} ${styles["sideBar--mobileActive"]}` : styles.sideBar}>
 			<div className={styles.sideBar__search}>
 				<span className={issearchActive ? styles.hide : styles["text--sl"]}>
 					Список резервуаров
 				</span>
 				<div className={styles.sideBar__searchWrapper}>
-					<button
-						className={styles.sideBar__button}
-						onClick={closeSearch}
-					>
+					<button className={styles.sideBar__button} onClick={closeSearch}>
 						<Image
 							src="/assets/svg/search-white.svg"
 							alt="Logo"
@@ -134,7 +142,7 @@ const SideBar: React.FC = () => {
 										? `${styles.sideBar__item} ${styles["sideBar__item--active"]}`
 										: styles.sideBar__item
 								}
-								onClick={() => setActive(item.id)}
+								onClick={() => menuOptionClick(item)}
 								key={item.id}
 							>
 								<p className="text">{item.name}</p>

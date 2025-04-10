@@ -2,6 +2,7 @@
 
 .Container {
 	position: relative;
+	width: 100%;
 }
 .icon {
 	display: flex;
@@ -44,11 +45,15 @@
 	margin: 0 0 8px 0;
 	height: 45px;
 	background: $secondary-color;
+	transition: ease-in-out all 0.2s;
+	&--active{
+		background: $active-input-color;
+	}
 
 	&__menu {
 		position: absolute;
 		width: 100%;
-		max-width: 360px;
+		max-width: calc(100% - 42px);
 		top: 48px;
 		left: 45px;
 		z-index: 999;
