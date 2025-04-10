@@ -15,76 +15,14 @@ type Reservoir = {
 	};
 };
 
-const mokiData: Reservoir[] = [
-	{
-		name: "DDD1",
-		capacity: 100,
-		volume: 10,
-		productId: 10,
-		isLocked: false,
-		id: 1000,
-		product: {
-			name: "DDD1",
-			id: 1000,
-		},
-	},
-	{
-		name: "DDD2",
-		capacity: 100,
-		volume: 1,
-		productId: 10,
-		isLocked: false,
-		id: 1001,
-		product: {
-			name: "DDD2",
-			id: 1001,
-		},
-	},
-	{
-		name: "DDD3",
-		capacity: 100,
-		volume: 55,
-		productId: 10,
-		isLocked: false,
-		id: 1002,
-		product: {
-			name: "DDD3",
-			id: 1002,
-		},
-	},
-	{
-		name: "DDD4",
-		capacity: 100,
-		volume: 100,
-		productId: 10,
-		isLocked: true,
-		id: 1003,
-		product: {
-			name: "DDD4",
-			id: 1003,
-		},
-	},
-	{
-		name: "DDD5",
-		capacity: 100,
-		volume: 0,
-		productId: 10,
-		isLocked: false,
-		id: 1004,
-		product: {
-			name: "DDD5",
-			id: 1004,
-		},
-	},
-];
-
 type Props = {
 	isOpenMobile: boolean;
+	reservoirsName: Reservoir[];
 	setIsOpenMobile: () => void;
 };
 
-const SideBar: React.FC<Props> = ({ isOpenMobile, setIsOpenMobile }) => {
-	const [active, setActive] = useState(mokiData[0].id);
+const SideBar: React.FC<Props> = ({ isOpenMobile, setIsOpenMobile, reservoirsName }) => {
+	const [active, setActive] = useState(reservoirsName[0].id);
 	const [searchValue, setSearchValue] = useState("");
 	const [issearchActive, setIssearchActive] = useState(false);
 
@@ -98,7 +36,11 @@ const SideBar: React.FC<Props> = ({ isOpenMobile, setIsOpenMobile }) => {
 		setIsOpenMobile();
 	};
 	return (
-		<div className={isOpenMobile ? `${styles.sideBar} ${styles["sideBar--mobileActive"]}` : styles.sideBar}>
+		<div
+			className={
+				isOpenMobile ? `${styles.sideBar} ${styles["sideBar--mobileActive"]}` : styles.sideBar
+			}
+		>
 			<div className={styles.sideBar__search}>
 				<span className={issearchActive ? styles.hide : styles["text--sl"]}>
 					Список резервуаров
@@ -132,7 +74,7 @@ const SideBar: React.FC<Props> = ({ isOpenMobile, setIsOpenMobile }) => {
 				</div>
 			</div>
 			<ul className={styles.sideBar__listReservoir}>
-				{mokiData
+				{reservoirsName
 					.filter((item: Reservoir) => item.name.toLowerCase().includes(searchValue.toLowerCase()))
 					.map((item: Reservoir) => {
 						return (
