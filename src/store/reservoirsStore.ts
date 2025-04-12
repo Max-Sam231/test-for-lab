@@ -1,30 +1,23 @@
 import { create } from "zustand";
 import { getAllReservoir } from "@/api/reservoirs";
+import { Reservoir } from "@/types/types";
 
-type Reservoir = {
-	name: string;
-	capacity: number;
-	volume: number;
-	productId: number;
-	isLocked: boolean;
-	id: number;
-	product: {
-		name: string;
-		id: number;
-	};
-};
 
 type ReservoirState = {
 	reservoirs: Reservoir[];
 	isLoading: boolean;
 	error: string | null;
 	fetchReservoirs: () => Promise<void>;
+	selectedReservoir : Reservoir | null;
+	setSelectedReservoir: (reservoir:Reservoir) => void;
 };
 
 export const useReservoirStore = create<ReservoirState>((set) => ({
 	reservoirs: [],
 	isLoading: false,
 	error: null,
+	selectedReservoir : null, 
+	setSelectedReservoir:(reservoir:Reservoir)=> set({selectedReservoir: reservoir}), 
 	fetchReservoirs: async () => {
 		set({ isLoading: true, error: null });
 		try {
