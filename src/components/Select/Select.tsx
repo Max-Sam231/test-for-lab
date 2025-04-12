@@ -1,19 +1,24 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Select.module.scss";
 import Image from "next/image";
+import { getAllProduts } from "@/api/reservoirs";
+import { useReservoirStore } from "@/store/reservoirsStore";
 
 const Select: React.FC = () => {
-	const selectOptions: string[] = [
-		"Бензин",
-		"Дизель",
-		"Автомобильное топливо",
-		"Авиационное топливо",
-		"Газ",
-	];
+	const {selectedReservoir} = useReservoirStore();
 	const [isSelectOpen, setIsSelectOpen] = useState(false);
-	const [SelectOption, setSelectOption] = useState(selectOptions[0]);
-	const menuRef = useRef<HTMLDivElement>(null);
+	const [Options, setOptions] = useState([]);
+	const [SelectOption, setSelectOption] = useState(selectedReservoir?.product.name);
+
+	useEffect(() => {
+		const getOption = async () => {
+			const data = await getAllProduts();
+			setOptions(data);
+		};
+		getOption();
+	}, []);
+
 	const optionClick = (option: string): void => {
 		setSelectOption(option);
 		setIsSelectOpen(!isSelectOpen);
@@ -29,12 +34,15 @@ const Select: React.FC = () => {
 					style={{ width: "auto", height: "auto", background: "transparent" }}
 				/>
 			</span>
-			<div className={isSelectOpen ? `${styles.select} ${styles["select--active"]}` : styles.select}>{SelectOption}</div>
+			<div
+				className={isSelectOpen ? `${styles.select} ${styles["select--active"]}` : styles.select}
+			>
+				{SelectOption}
+			</div>
 			<span
 				className={isSelectOpen ? `${styles.arrow} ${styles["arrow--up"]} ` : styles.arrow}
 			></span>
 			<div
-				ref={menuRef}
 				className={
 					isSelectOpen
 						? `${styles.select__menu} ${styles["select__menu--open"]} `
@@ -42,14 +50,14 @@ const Select: React.FC = () => {
 				}
 			>
 				<ul>
-					{selectOptions.map((item, index) => {
+					{Options.map((item: { name: string; id: number }, index) => {
 						return (
 							<li
 								key={index}
-								className={item === SelectOption ? styles.active : ""}
-								onClick={() => optionClick(item)}
+								className={item.name === SelectOption ? styles.active : ""}
+								onClick={() => optionClick(item.name)}
 							>
-								{item}
+								{item.name}
 							</li>
 						);
 					})}
