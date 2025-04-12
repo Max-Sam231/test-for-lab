@@ -1,6 +1,8 @@
-export const getAllReservoir = async () => {
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+export const getAllProduts = async () => {
 	try {
-		const response = await fetch("API_URL/reservoirs/", {
+		const response = await fetch(`${apiUrl}/products/`, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -11,7 +13,26 @@ export const getAllReservoir = async () => {
 			throw new Error(`HTTP error! Status: ${response.status}`);
 		}
 		const data = await response.json();
-		console.log(data);
+		return data;
+	} catch (error) {
+		console.error("Ошибка:", error);
+		throw error;
+	}
+};
+
+export const getAllReservoir = async () => {
+	try {
+		const response = await fetch(`${apiUrl}/reservoirs/`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				"Access-Control-Allow-Origin": "*",
+			},
+		});
+		if (!response.ok) {
+			throw new Error(`HTTP error! Status: ${response.status}`);
+		}
+		const data = await response.json();
 		return data;
 	} catch (error) {
 		console.error("Ошибка:", error);
@@ -21,7 +42,7 @@ export const getAllReservoir = async () => {
 
 export const getReservoirById = async (reservoirId: number) => {
 	try {
-		const response = await fetch(`API_URL/reservoirs/${reservoirId}`, {
+		const response = await fetch(`${apiUrl}/reservoirs/${reservoirId}`, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -41,9 +62,9 @@ export const getReservoirById = async (reservoirId: number) => {
 	}
 };
 
-export const createReservoir = async (reservoir:string) => {
+export const createReservoir = async (reservoir: string) => {
 	try {
-		const response = await fetch("API_URL/reservoirs/", {
+		const response = await fetch(`${apiUrl}/reservoirs/`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -67,7 +88,7 @@ export const createReservoir = async (reservoir:string) => {
 
 export const updateReservoir = async (reservoirId: string, updatedReservoir: string) => {
 	try {
-		const response = await fetch(`API_URL/reservoirs/${reservoirId}`, {
+		const response = await fetch(`${apiUrl}/reservoirs/${reservoirId}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
@@ -80,7 +101,6 @@ export const updateReservoir = async (reservoirId: string, updatedReservoir: str
 			throw new Error(`HTTP error! Status: ${response.status}`);
 		}
 		const data = await response.json();
-		console.log(data);
 		return data;
 	} catch (error) {
 		console.error("Ошибка:", error);
@@ -90,19 +110,40 @@ export const updateReservoir = async (reservoirId: string, updatedReservoir: str
 
 export const deleteReservoir = async (reservoirId: string) => {
 	try {
-		const response = await fetch(`https://reservoir-api.caravanlabs.ru/reservoirs/${reservoirId}`, {
+		const response = await fetch(`${apiUrl}/reservoirs/${reservoirId}`, {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
 				"Access-Control-Allow-Origin": "*",
 			},
 		});
-
 		if (!response.ok) {
 			throw new Error(`HTTP error! Status: ${response.status}`);
 		}
-		console.log(`Резервуар ${reservoirId} успешно удален`);
 		return true;
+	} catch (error) {
+		console.error("Ошибка:", error);
+		throw error;
+	}
+};
+
+export const PatchToggleReservoir = async (reservoirId: number | undefined) => {
+	try {
+		const response = await fetch(
+			`https://reservoir-api.caravanlabs.ru/reservoirs/${reservoirId}/toggle-lock`,
+			{
+				method: "PATCH",
+				headers: {
+					"Content-Type": "application/json",
+					"Access-Control-Allow-Origin": "*",
+				},
+			}
+		);
+		if (!response.ok) {
+			throw new Error(`HTTP error! Status: ${response.status}`);
+		}
+		const data = await response.json();
+		return data;
 	} catch (error) {
 		console.error("Ошибка:", error);
 		throw error;
