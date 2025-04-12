@@ -108,7 +108,7 @@ export const updateReservoir = async (reservoirId: string, updatedReservoir: str
 	}
 };
 
-export const deleteReservoir = async (reservoirId: string) => {
+export const deleteReservoir = async (reservoirId: number | undefined) => {
 	try {
 		const response = await fetch(`${apiUrl}/reservoirs/${reservoirId}`, {
 			method: "DELETE",

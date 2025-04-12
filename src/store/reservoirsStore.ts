@@ -9,7 +9,7 @@ type ReservoirState = {
 	error: string | null;
 	fetchReservoirs: () => Promise<void>;
 	selectedReservoir : Reservoir | null;
-	setSelectedReservoir: (reservoir:Reservoir) => void;
+	setSelectedReservoir: (reservoir:Reservoir | null) => void;
 };
 
 export const useReservoirStore = create<ReservoirState>((set) => ({
@@ -17,7 +17,7 @@ export const useReservoirStore = create<ReservoirState>((set) => ({
 	isLoading: false,
 	error: null,
 	selectedReservoir : null, 
-	setSelectedReservoir:(reservoir:Reservoir)=> set({selectedReservoir: reservoir}), 
+	setSelectedReservoir:(reservoir:Reservoir | null)=> set({selectedReservoir: reservoir}), 
 	fetchReservoirs: async () => {
 		set({ isLoading: true, error: null });
 		try {

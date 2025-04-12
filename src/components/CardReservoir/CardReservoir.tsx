@@ -24,7 +24,6 @@ const CardReservoir: React.FC<Props> = ({ reservoir }) => {
 					height={200}
 					style={{ width: "200px", height: "200px", background: "transparent" }}
 				/>
-
 				{reservoir && (
 					<>
 						<ReservoirInfo />
