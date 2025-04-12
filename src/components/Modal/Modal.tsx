@@ -6,9 +6,10 @@ type Props = {
 	children: React.ReactNode;
 	isOpen: boolean;
 	setIsOpen: (open: boolean) => void;
-}
+	successFunc: () => void;
+};
 
-const Modal: React.FC<Props> = ({ setIsOpen, isOpen, children }) => {
+const Modal: React.FC<Props> = ({ setIsOpen, isOpen, children, successFunc }) => {
 	return (
 		<>
 			{isOpen ? (
@@ -28,7 +29,7 @@ const Modal: React.FC<Props> = ({ setIsOpen, isOpen, children }) => {
 						</div>
 						<div className={styles.modal__content}>{children}</div>
 						<div className={styles.modal__footer}>
-							<button className={`${styles.button} ${styles["button--active"]}`}>
+							<button className={`${styles.button} ${styles["button--active"]}`} onClick={()=> successFunc()}>
 								Подтвердить
 							</button>
 							<button onClick={() => setIsOpen(!isOpen)} className={styles.button}>
