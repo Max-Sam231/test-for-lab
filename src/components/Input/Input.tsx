@@ -1,106 +1,82 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import styles from "./Input.module.scss";
+import { useFormContext } from "react-hook-form";
+import { ReservoirFormData } from "@/schemas/ValidationScheme";
 
 type Props = {
 	icon: string;
-	valueInput: string;
-	changeValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	nameInput: "nameReservoir" | "capacity" | "volume" | "productId";
-	defaultValue: string;
-	cancelValue: (name: "nameReservoir" | "capacity" | "volume" | "productId") => void;
-	successValue: (
-		name: "nameReservoir" | "capacity" | "volume" | "productId",
-		value: string
-	) => void;
+	name: keyof ReservoirFormData;
+	error?: string;
+	onCancel: (name: keyof ReservoirFormData) => void;
+	onSuccess: (name: keyof ReservoirFormData) => void;
+	defaultValue: string | number;
 };
-const Input: React.FC<Props> = ({
-	icon,
-	valueInput,
-	changeValue,
-	nameInput,
-	defaultValue,
-	cancelValue,
-	successValue,
-}) => {
-	const [isActive, setIsActive] = useState(false);
 
-	useEffect(() => {
-		if (String(defaultValue) === valueInput) {
-			setIsActive(false);
-		} else {
-			setIsActive(true);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [valueInput]);
+const Input: React.FC<Props> = ({ icon, name, error, onCancel, onSuccess, defaultValue }) => {
+	const { register, formState, setValue } = useFormContext<ReservoirFormData>();
+	const isDirty = formState.dirtyFields[name];
 
-	const cancelInputValue = () => {
-		cancelValue(nameInput);
-		setIsActive(false);
+	const handleCancel = () => {
+		setValue(name, defaultValue);
+		onCancel(name);
 	};
 
-	const successInputValue = () => {
-		successValue(nameInput, valueInput);
-		setIsActive(false);
+	const handleSuccess = () => {
+		onSuccess(name);
 	};
+
 	return (
 		<div className={styles.inputContainer}>
 			<span className={`${styles.icon} ${styles.inputContainer__icon}`}>
-				<Image
-					src={`/assets/svg/${icon}.svg`}
-					alt="Logo"
-					width={100}
-					height={100}
-					style={{ width: "auto", height: "auto" }}
-				/>
+				<Image src={`/assets/svg/${icon}.svg`} alt="icon" width={30} height={30} />
 			</span>
 			<input
-				className={
-					isActive
-						? `${styles.inputContainer__input} ${styles["inputContainer__input--active"]}`
-						: styles.inputContainer__input
-				}
-				type="text"
+				{...register(name)}
+				className={`${styles.inputContainer__input} ${
+					isDirty ? styles["inputContainer__input--active"] : ""
+				}`}
 				autoComplete="off"
-				name={nameInput}
-				value={valueInput}
-				onChange={changeValue}
 			/>
-			<button
-				type="button"
-				onClick={successInputValue}
-				className={
-					isActive
-						? `${styles.button} ${styles["button--save"]} ${styles["button--active"]}`
-						: styles.button
-				}
-			>
-				<Image
-					src={`/assets/svg/tick.svg`}
-					alt="Logo"
-					width={100}
-					height={100}
-					style={{ width: "auto", height: "auto" }}
-				/>
-			</button>
-			<button
-				onClick={() => cancelInputValue()}
-				type="button"
-				className={
-					isActive
-						? `${styles.button} ${styles["button--cancel"]} ${styles["button--active"]}`
-						: styles.button
-				}
-			>
-				<Image
-					src={`/assets/svg/cancel-input.svg`}
-					alt="Logo"
-					width={100}
-					height={100}
-					style={{ width: "auto", height: "auto" }}
-				/>
-			</button>
+			<>
+				<button
+					type="button"
+					onClick={handleSuccess}
+					className={
+						isDirty
+							? `${styles.button} ${styles["button--save"]} ${styles["button--active"]}`
+							: styles.button
+					}
+				>
+					<Image
+						src="/assets/svg/tick.svg"
+						alt="Сохранить"
+						width={14}
+						height={14}
+						style={{ width: "auto", height: "auto" }}
+					/>
+				</button>
+				<button
+					type="button"
+					onClick={handleCancel}
+					className={
+						isDirty
+							? `${styles.button} ${styles["button--cancel"]} ${styles["button--active"]}`
+							: styles.button
+					}
+				>
+					<Image
+						src="/assets/svg/cancel-input.svg"
+						alt="Отменить"
+						width={14}
+						height={14}
+						style={{ width: "auto", height: "auto" }}
+					/>
+				</button>
+			</>
+
+			{error && <p className={styles.error}>{error}</p>}
 		</div>
 	);
 };
