@@ -2,30 +2,44 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Select.module.scss";
 import Image from "next/image";
+import { Control, useController } from "react-hook-form";
 import { getAllProduts } from "@/api/reservoirs";
-import { useReservoirStore } from "@/store/reservoirsStore";
+import { ReservoirFormData } from "@/schemas/ValidationScheme";
 
-const Select: React.FC = () => {
-	const {selectedReservoir} = useReservoirStore();
+type Props = {
+	name: keyof ReservoirFormData;
+	control: Control<ReservoirFormData>;
+	placeholder?: string;
+};
+
+const Select: React.FC<Props> = ({ name, control, placeholder = "Выберите продукт" }) => {
+	const { field } = useController({ name, control });
 	const [isSelectOpen, setIsSelectOpen] = useState(false);
-	const [Options, setOptions] = useState([]);
-	const [SelectOption, setSelectOption] = useState(selectedReservoir?.product.name);
-
+	const [options, setOptions] = useState<{ id: number; name: string }[]>([]);
+	const [selectedProduct, setSelectedProduct] = useState<{ id: number; name: string } | null>(null);
 	useEffect(() => {
-		const getOption = async () => {
-			const data = await getAllProduts();
-			setOptions(data);
-		};
-		getOption();
-	}, []);
+		if (options.length == 0) {
+			const fetchProducts = async () => {
+				const data = await getAllProduts();
+				setOptions(data);
+			};
+			fetchProducts();
+		}
+		if (field.value) {
+			const product = options.find((opt) => opt.id === field.value);
+			setSelectedProduct(product || null);
+		}
+	}, [field.value, options]);
 
-	const optionClick = (option: string): void => {
-		setSelectOption(option);
-		setIsSelectOpen(!isSelectOpen);
+	const OptionClick = (option: { id: number; name: string }) => {
+		field.onChange(option.id);
+		setSelectedProduct(option);
+		setIsSelectOpen(false);
 	};
+
 	return (
 		<div className={styles.Container} onClick={() => setIsSelectOpen(!isSelectOpen)}>
-			<span className={`${styles.icon}`}>
+			<span className={styles.icon}>
 				<Image
 					src="/assets/svg/drop.svg"
 					alt="Logo"
@@ -37,7 +51,7 @@ const Select: React.FC = () => {
 			<div
 				className={isSelectOpen ? `${styles.select} ${styles["select--active"]}` : styles.select}
 			>
-				{SelectOption}
+				{selectedProduct?.name || placeholder}
 			</div>
 			<span
 				className={isSelectOpen ? `${styles.arrow} ${styles["arrow--up"]} ` : styles.arrow}
@@ -50,20 +64,19 @@ const Select: React.FC = () => {
 				}
 			>
 				<ul>
-					{Options.map((item: { name: string; id: number }, index) => {
-						return (
-							<li
-								key={index}
-								className={item.name === SelectOption ? styles.active : ""}
-								onClick={() => optionClick(item.name)}
-							>
-								{item.name}
-							</li>
-						);
-					})}
+					{options.map((option) => (
+						<li
+							key={option.id}
+							className={option.id === selectedProduct?.id ? styles.active : ""}
+							onClick={() => OptionClick(option)}
+						>
+							{option.name}
+						</li>
+					))}
 				</ul>
 			</div>
 		</div>
 	);
 };
+
 export default Select;

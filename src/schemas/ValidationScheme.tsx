@@ -5,7 +5,7 @@ export const reservoirSchema = z
 		name: z.string().nonempty("Название резервуара обязательно"),
 		capacity: z.number().positive("Вместимость должна быть положительным числом"),
 		volume: z.number().min(0, "Объем должен быть больше или равен 0"),
-		productId: z.string().nonempty("Выберите продукт"),
+		productId: z.number().positive("Выберите продукт"),
 	})
 	.superRefine(({ capacity, volume }, ctx) => {
 		if (volume > capacity) {

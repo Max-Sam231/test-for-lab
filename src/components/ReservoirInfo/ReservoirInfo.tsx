@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import Input from "../Input/Input";
 import Select from "../Select/Select";
@@ -6,16 +7,17 @@ import { useReservoirStore } from "@/store/reservoirsStore";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { ReservoirFormData, reservoirSchema } from "@/schemas/ValidationScheme";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { updateReservoir } from "@/api/reservoirs";
 
 const ReservoirInfo: React.FC = () => {
-	const { selectedReservoir, setSelectedReservoir } = useReservoirStore();
+	const { selectedReservoir, setSelectedReservoir, fetchReservoirs } = useReservoirStore();
 	const methods = useForm<ReservoirFormData>({
 		resolver: zodResolver(reservoirSchema),
 		defaultValues: {
 			name: selectedReservoir?.name || "",
 			capacity: selectedReservoir?.capacity || 0,
 			volume: selectedReservoir?.volume || 0,
-			productId: selectedReservoir?.productId?.toString() || "",
+			productId: selectedReservoir?.productId || 1,
 		},
 		mode: "onChange",
 	});
@@ -31,7 +33,7 @@ const ReservoirInfo: React.FC = () => {
 				name: selectedReservoir.name,
 				capacity: selectedReservoir.capacity,
 				volume: selectedReservoir.volume,
-				productId: selectedReservoir.productId.toString(),
+				productId: selectedReservoir.productId,
 			});
 		}
 	}, [selectedReservoir, reset]);
@@ -40,16 +42,20 @@ const ReservoirInfo: React.FC = () => {
 		const currentValue = methods.getValues(name);
 		setSelectedReservoir({
 			...selectedReservoir!,
-			[name]: currentValue,
+			[name]: name === "capacity" || name === "volume" ? Number(currentValue) : currentValue,
 		});
-		console.log(selectedReservoir);
-
 		methods.setValue(name, currentValue, { shouldDirty: false });
 	};
 
-	const onSubmit: SubmitHandler<ReservoirFormData> = (data) => {
-		if (methods.formState.isDirty || methods.formState.isValid) return;
+	const onSubmit: SubmitHandler<ReservoirFormData> = async (data) => {
+		if (methods.formState.isDirty) {
+			console.log("Form submitted:", data);
+			return;
+		}
 		console.log("Form submitted:", data);
+		const updatedReservoir = await updateReservoir(selectedReservoir?.id, data);
+		await fetchReservoirs();
+		setSelectedReservoir(updatedReservoir);
 	};
 
 	return (
@@ -64,11 +70,12 @@ const ReservoirInfo: React.FC = () => {
 						onSuccess={(name) => handleSuccess(name)}
 						defaultValue={selectedReservoir?.name || ""}
 					/>
-					<Select />
+					<Select name="productId" control={methods.control} placeholder="Выберите продукт" />
 					<Input
 						icon="capacity-full"
 						name="capacity"
-						error={methods.formState.errors.name?.message}
+						type="number"
+						error={methods.formState.errors.capacity?.message}
 						onCancel={(name) => methods.resetField(name)}
 						onSuccess={(name) => handleSuccess(name)}
 						defaultValue={selectedReservoir?.capacity || 0}
@@ -90,7 +97,8 @@ const ReservoirInfo: React.FC = () => {
 						<Input
 							icon="capacity"
 							name="volume"
-							error={methods.formState.errors.name?.message}
+							type="number"
+							error={methods.formState.errors.volume?.message}
 							onCancel={(name) => methods.resetField(name)}
 							onSuccess={(name) => handleSuccess(name)}
 							defaultValue={selectedReservoir?.volume || 0}
