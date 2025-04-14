@@ -23,7 +23,7 @@ body {
 	font-size: $font-size-base;
 	background-color: $bg-color;
 	color: $text-color;
-	user-select: none;	
+	user-select: none;
 }
 
 a {
@@ -42,6 +42,11 @@ input {
 	outline: none;
 	font-size: $font-size-base;
 	color: $text-color;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
 }
 
 button {

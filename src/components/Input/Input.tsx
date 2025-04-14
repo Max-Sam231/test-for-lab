@@ -7,6 +7,7 @@ import { ReservoirFormData } from "@/schemas/ValidationScheme";
 
 type Props = {
 	icon: string;
+	type?: string;
 	name: keyof ReservoirFormData;
 	error?: string;
 	onCancel: (name: keyof ReservoirFormData) => void;
@@ -14,7 +15,15 @@ type Props = {
 	defaultValue: string | number;
 };
 
-const Input: React.FC<Props> = ({ icon, name, error, onCancel, onSuccess, defaultValue }) => {
+const Input: React.FC<Props> = ({
+	icon,
+	name,
+	error,
+	onCancel,
+	onSuccess,
+	defaultValue,
+	type = "text",
+}) => {
 	const { register, formState, setValue } = useFormContext<ReservoirFormData>();
 	const isDirty = formState.dirtyFields[name];
 
@@ -28,15 +37,18 @@ const Input: React.FC<Props> = ({ icon, name, error, onCancel, onSuccess, defaul
 	};
 
 	return (
-		<div className={styles.inputContainer}>
+		<div className={`${styles.inputContainer} ${error ? styles["inputContainer--error"] : ""}`}>
 			<span className={`${styles.icon} ${styles.inputContainer__icon}`}>
 				<Image src={`/assets/svg/${icon}.svg`} alt="icon" width={30} height={30} />
 			</span>
 			<input
-				{...register(name)}
+				type={type}
+				{...register(name, {
+					setValueAs: type === "number" ? (value) => Number(value) : (value) => value,
+				})}
 				className={`${styles.inputContainer__input} ${
-					isDirty ? styles["inputContainer__input--active"] : ""
-				}`}
+					isDirty ? `${styles["inputContainer__input--active"]}` : ""
+				} ${error ? styles["inputContainer__input--error"] : ""}`}
 				autoComplete="off"
 			/>
 			<>
