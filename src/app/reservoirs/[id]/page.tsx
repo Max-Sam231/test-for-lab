@@ -2,24 +2,11 @@
 import { PatchToggleReservoir, deleteReservoir } from "@/api/reservoirs";
 import CardReservoir from "@/components/CardReservoir/CardReservoir";
 import Modal from "@/components/Modal/Modal";
+import { ModalsContext } from "@/context/ModalsContext";
 import { useReservoirStore } from "@/store/reservoirsStore";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useEffect, useState } from "react";
-
-export type ModalsContextType = {
-  lockModal: boolean;
-  setLockModal: React.Dispatch<React.SetStateAction<boolean>>;
-  deleteModal: boolean;
-  setDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-export const ModalsContext = React.createContext<ModalsContextType>({
-  lockModal: false,
-  setLockModal: () => {},
-  deleteModal: false,
-  setDeleteModal: () => {},
-});
 
 export default function Home() {
   const { selectedReservoir, setSelectedReservoir, fetchReservoirs } = useReservoirStore();

@@ -2,8 +2,8 @@
 import Image from "next/image";
 import styles from "./ControlPanel.module.scss";
 import React, { useContext } from "react";
-import { ModalsContext } from "@/app/reservoirs/[id]/page";
 import { useReservoirStore } from "@/store/reservoirsStore";
+import { ModalsContext } from "@/context/ModalsContext";
 
 const ControlPanel: React.FC = () => {
   const { lockModal, setLockModal, deleteModal, setDeleteModal } = useContext(ModalsContext);
