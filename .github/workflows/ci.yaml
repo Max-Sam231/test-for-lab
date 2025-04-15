@@ -1,0 +1,31 @@
+name: lint and checking code
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint-and-test:
+    name: Checking the code
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Cloning a repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - name: Dependency Install
+        run: npm install
+
+        env:
+          CI: true
+
+      - name: checking formatting
+        run: npm run check-format
+
+      - name: Launching linter
+        run: npm run lint
