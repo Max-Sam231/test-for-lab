@@ -1,0 +1,13 @@
+@import "../../styles/variables.scss";
+@import "../Modal/Modal.module.scss";
+
+.modal {
+  &__container {
+    top: 20vh;
+  }
+  &__header {
+    display: flex;
+    justify-content: center;
+    padding: 14px 0 14px 0;
+  }
+}
