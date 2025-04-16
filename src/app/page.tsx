@@ -1,7 +1,3 @@
-"use client";
-import styles from "./page.module.scss";
-
 export default function Home() {
-
-	return <div className={styles.wrapper}></div>;
+  return <>{/* <p>Добро пожаловать! Выберите существующий резервуар или создайте новый</p> */}</>;
 }

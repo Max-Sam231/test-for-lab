@@ -1,0 +1,14 @@
+node_modules
+dist
+.next
+out
+
+package-lock.json
+yarn.lock
+.prettierignore
+.eslintcache
+
+.next
+
+*.yaml
+*.yml

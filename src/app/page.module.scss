@@ -1,1 +1,28 @@
 @import "../styles/variables.scss";
+
+.wrapper {
+  padding: 24px;
+  @media (max-width: 768px) {
+    padding: 12px;
+  }
+}
+.container {
+  display: flex;
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
+}
+.icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  // background: $icon-color;
+}
+
+.text--sl {
+  font-size: $font-size-sl;
+}
+
+.hide {
+  display: none;
+}

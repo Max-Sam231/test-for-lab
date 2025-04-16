@@ -1,0 +1,76 @@
+@import "../../styles/variables.scss";
+.header {
+  width: 100%;
+  padding: 8px;
+  background-color: $primary-color;
+  min-height: 50px;
+  border-radius: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @media (max-width: 768px) {
+    padding: 12px 8px 12px 8px;
+    justify-content: flex-start;
+  }
+}
+.right {
+  display: flex;
+  width: calc(100% - 35.7vw);
+  justify-content: flex-end;
+  @media (max-width: 768px) {
+    justify-content: flex-start;
+  }
+}
+.left {
+  display: flex;
+  min-width: 540px;
+  width: 35.7vw;
+  justify-content: space-between;
+  @media (max-width: 768px) {
+    min-width: 220px;
+    display: none;
+  }
+}
+.logo {
+  display: flex;
+  align-items: center;
+  p {
+    margin: 0 0 0 18px;
+  }
+}
+.icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  // background: $icon-color;
+}
+.mobileMenu {
+  display: none;
+  background: transparent;
+  height: auto;
+  cursor: pointer;
+  height: 24px;
+  padding: 1px 0 0 0;
+  @media (max-width: 768px) {
+    display: block;
+  }
+}
+.button {
+  border-radius: 2px;
+  padding: 12px 16px 12px 16px;
+  color: $text-color;
+  width: auto;
+  background: $gray;
+  &--active {
+    background: $light-blue;
+  }
+  &--disable {
+    background: darken($gray, 3%);
+  }
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+.text--sl {
+  font-size: $font-size-sl;
+}
