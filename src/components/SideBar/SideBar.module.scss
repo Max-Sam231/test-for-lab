@@ -73,6 +73,10 @@
     position: relative;
     overflow: hidden;
   }
+  input::placeholder {
+    color: $text-color;
+    font-size: 14px;
+  }
   &__input {
     width: 0px;
     padding: 0;

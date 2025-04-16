@@ -46,7 +46,11 @@ const SideBar: React.FC<Props> = ({ isOpenMobile, setIsOpenMobile }) => {
           <div
             className={`${styles.sideBar__search} ${issearchActive ? styles["sideBar__search--active"] : ""}`}
           >
-            <span className={issearchActive ? styles.hide : styles["text--sl"]}>
+            <span
+              className={
+                issearchActive ? `${styles.hide} ${styles["text--sl"]}` : styles["text--sl"]
+              }
+            >
               Список резервуаров
             </span>
             <div

@@ -9,3 +9,6 @@ yarn.lock
 .eslintcache
 
 .next
+
+*.yaml
+*.yml
