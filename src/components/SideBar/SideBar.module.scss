@@ -1,8 +1,9 @@
 @import "../../styles/variables.scss";
+@import "../Header/Header.module.scss";
 
 .sideBar {
   width: 25%;
-  min-width: 320px;
+  min-width: 340px;
   margin: 8px 0;
   border-radius: 2px;
   max-width: 400px;
@@ -10,18 +11,26 @@
   overflow: hidden;
   background-color: $primary-color;
   @media (max-width: 768px) {
-    // display: none;
     position: absolute;
-    left: -100vw;
+    left: -120vw;
     top: 0;
     z-index: 999;
     width: 80vw;
+    min-width: 300px;
     max-width: none;
     height: 100vh;
     margin: 0;
     transition: all ease-in 0.2s;
     &--mobileActive {
       left: 0vw;
+    }
+  }
+  .button {
+    display: none;
+    width: 100%;
+    margin: 0 0 2px 0;
+    @media (max-width: 768px) {
+      display: block;
     }
   }
 
@@ -33,16 +42,27 @@
     padding: 16px 16px 16px 60px;
     margin: 0 0 2px 0; //1.6
     background-color: $secondary-color;
-    div {
+    transition: all ease-in 0.4s;
+    &--active {
+      padding: 16px 16px 16px 30px;
+    }
+    .sideBar__searchWrapper {
       display: flex;
       align-items: center;
+      justify-content: flex-end;
+      transition: all ease-in 0.4s;
+      width: 14%;
+      &--active {
+        width: 100%;
+        transition: all ease-in 0.4s;
+      }
     }
     span {
       display: block;
       width: 190px;
       white-space: nowrap;
       overflow: hidden;
-      transition: all ease-in 0.2s;
+      transition: all ease-in 0.3s;
     }
     .hide {
       width: 0px;
@@ -60,41 +80,30 @@
     height: 35px;
     background: $primary-color;
     transition: all ease-in-out 0.4s;
+    @media (max-width: 768px) {
+      font-size: 14px;
+      transition: all ease-in-out 0.1s;
+    }
     &--active {
-      width: calc(24vw - 60px - 35px - 16px);
-      min-width: 210px;
-      padding: 0 34px 0 8px;
+      width: 100%;
+      padding: 0 8px 0 8px;
       height: 35px;
       background: $primary-color;
       transition: all ease-in-out 0.4s;
-    }
-  }
-  &__cross {
-    position: absolute;
-    right: -36px;
-    height: 35px;
-    width: 35px;
-    border-radius: 2px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 28px;
-    cursor: pointer;
-    font-weight: 100;
-    background: $gray;
-    transition: all ease-in 0.3s;
-    &--active {
-      right: 0px;
     }
   }
   &__button {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 35px;
+    min-width: 35px;
     height: 35px;
     background: $gray;
     border-radius: 2px;
+    transition: all ease-in 0.2s;
+    &--active {
+      background: $light-blue;
+    }
   }
   &__listReservoir {
     height: 73vh;

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useReservoirStore } from "@/store/reservoirsStore";
 import { Reservoir } from "@/types/types";
 import Link from "next/link";
+import CreateReservoir from "../CreateReservoir/CreateReservoir";
 
 type Props = {
   isOpenMobile: boolean;
@@ -13,6 +14,7 @@ type Props = {
 };
 
 const SideBar: React.FC<Props> = ({ isOpenMobile, setIsOpenMobile }) => {
+  const [isOpenCreate, setIsOpenCreate] = useState(false);
   const [active, setActive] = useState(0);
   const [searchValue, setSearchValue] = useState("");
   const [issearchActive, setIssearchActive] = useState(false);
@@ -37,16 +39,28 @@ const SideBar: React.FC<Props> = ({ isOpenMobile, setIsOpenMobile }) => {
     <div
       className={
         isOpenMobile ? `${styles.sideBar} ${styles["sideBar--mobileActive"]}` : styles.sideBar
-      }
-    >
+      }>
       {!isLoading && (
         <>
-          <div className={styles.sideBar__search}>
+          <div
+            className={`${styles.sideBar__search} ${issearchActive ? styles["sideBar__search--active"] : ""}`}>
             <span className={issearchActive ? styles.hide : styles["text--sl"]}>
               Список резервуаров
             </span>
-            <div className={styles.sideBar__searchWrapper}>
-              <button className={styles.sideBar__button} onClick={closeSearch}>
+            <div
+              className={`${styles.sideBar__searchWrapper} ${issearchActive ? styles["sideBar__searchWrapper--active"] : ""}`}>
+              <input
+                className={
+                  issearchActive ? styles["sideBar__input--active"] : styles.sideBar__input
+                }
+                value={searchValue}
+                placeholder="Введите название резервуара"
+                onChange={(event) => setSearchValue(event.target.value)}
+                type="text"
+              />
+              <button
+                className={`${styles.sideBar__button} ${issearchActive ? styles["sideBar__button--active"] : ""} `}
+                onClick={closeSearch}>
                 <Image
                   src="/assets/svg/search-white.svg"
                   alt="Logo"
@@ -55,26 +69,16 @@ const SideBar: React.FC<Props> = ({ isOpenMobile, setIsOpenMobile }) => {
                   style={{ width: "auto", height: "auto", background: "transparent" }}
                 />
               </button>
-              <input
-                className={
-                  issearchActive ? styles["sideBar__input--active"] : styles.sideBar__input
-                }
-                value={searchValue}
-                onChange={(event) => setSearchValue(event.target.value)}
-                type="text"
-              />
-              <div
-                onClick={closeSearch}
-                className={
-                  issearchActive
-                    ? `${styles.sideBar__cross} ${styles["sideBar__cross--active"]}`
-                    : styles.sideBar__cross
-                }
-              >
-                ⨯
-              </div>
             </div>
           </div>
+          {isOpenMobile && (
+            <button
+              onClick={() => setIsOpenCreate(true)}
+              className={`${styles.button} ${styles["text--sl"]}`}>
+              Добавить резервуар
+            </button>
+          )}
+          <CreateReservoir isOpen={isOpenCreate} setIsOpen={setIsOpenCreate} />
           <ul className={styles.sideBar__listReservoir}>
             {reservoirs
               .filter((item: Reservoir) =>
@@ -90,8 +94,7 @@ const SideBar: React.FC<Props> = ({ isOpenMobile, setIsOpenMobile }) => {
                           : styles.sideBar__item
                       }
                       onClick={() => menuOptionClick(item)}
-                      key={item.id}
-                    >
+                      key={item.id}>
                       <p className="text">{item.name}</p>
                       {item.isLocked ? (
                         <span className={styles.icon}>
