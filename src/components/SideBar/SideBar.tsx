@@ -78,6 +78,7 @@ const SideBar: React.FC<Props> = ({ isOpenMobile, setIsOpenMobile }) => {
                 />
               </button>
             </div>
+            <div onClick={() => setIsOpenMobile()} className={styles.sideBar__cross}></div>
           </div>
           {isOpenMobile && (
             <button
