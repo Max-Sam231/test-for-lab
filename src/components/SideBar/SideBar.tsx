@@ -39,16 +39,19 @@ const SideBar: React.FC<Props> = ({ isOpenMobile, setIsOpenMobile }) => {
     <div
       className={
         isOpenMobile ? `${styles.sideBar} ${styles["sideBar--mobileActive"]}` : styles.sideBar
-      }>
+      }
+    >
       {!isLoading && (
         <>
           <div
-            className={`${styles.sideBar__search} ${issearchActive ? styles["sideBar__search--active"] : ""}`}>
+            className={`${styles.sideBar__search} ${issearchActive ? styles["sideBar__search--active"] : ""}`}
+          >
             <span className={issearchActive ? styles.hide : styles["text--sl"]}>
               Список резервуаров
             </span>
             <div
-              className={`${styles.sideBar__searchWrapper} ${issearchActive ? styles["sideBar__searchWrapper--active"] : ""}`}>
+              className={`${styles.sideBar__searchWrapper} ${issearchActive ? styles["sideBar__searchWrapper--active"] : ""}`}
+            >
               <input
                 className={
                   issearchActive ? styles["sideBar__input--active"] : styles.sideBar__input
@@ -60,7 +63,8 @@ const SideBar: React.FC<Props> = ({ isOpenMobile, setIsOpenMobile }) => {
               />
               <button
                 className={`${styles.sideBar__button} ${issearchActive ? styles["sideBar__button--active"] : ""} `}
-                onClick={closeSearch}>
+                onClick={closeSearch}
+              >
                 <Image
                   src="/assets/svg/search-white.svg"
                   alt="Logo"
@@ -74,7 +78,8 @@ const SideBar: React.FC<Props> = ({ isOpenMobile, setIsOpenMobile }) => {
           {isOpenMobile && (
             <button
               onClick={() => setIsOpenCreate(true)}
-              className={`${styles.button} ${styles["text--sl"]}`}>
+              className={`${styles.button} ${styles["text--sl"]}`}
+            >
               Добавить резервуар
             </button>
           )}
@@ -94,7 +99,8 @@ const SideBar: React.FC<Props> = ({ isOpenMobile, setIsOpenMobile }) => {
                           : styles.sideBar__item
                       }
                       onClick={() => menuOptionClick(item)}
-                      key={item.id}>
+                      key={item.id}
+                    >
                       <p className="text">{item.name}</p>
                       {item.isLocked ? (
                         <span className={styles.icon}>
